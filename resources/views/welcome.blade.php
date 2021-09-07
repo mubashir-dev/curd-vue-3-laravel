@@ -11,13 +11,13 @@
         <div class="container-fluid mt-4">
             <div class="row">
                     <div class="col-md-12" id="app">
-                        <b><h4 class="text-center font-weight-bold">Vue 3 Laravel Curd</h4></b>
+                        <b><h4 class="text-center font-weight-bold mb-2">Daily Todo's Manager</h4></b>
                         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                             <div class="collapse navbar-collapse">
                                 <div class="navbar-nav">
                                     <router-link to="/" class="nav-item nav-link">Home</router-link>
+                                    <router-link to="/completed" class="nav-item nav-link">Completed Todo's</router-link>
                                     <router-link to="/add" class="nav-item nav-link">Add Todo</router-link>
-                                    <router-link to="/add" class="nav-item nav-link">Completed</router-link>
                                 </div>
                             </div>
                         </nav>

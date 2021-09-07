@@ -19,3 +19,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 Route::apiResource('todo','TodoController');
+Route::get('todos/completed/{id}','TodoController@completed');
+Route::get('todos/undocompleted/{id}','TodoController@undocompleted');
+Route::get('todos/completedIndex','TodoController@completedIndex');
+

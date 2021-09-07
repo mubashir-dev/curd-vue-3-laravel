@@ -8,5 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Todo extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','description','priority','start_date','end_date'];
+    protected $fillable = ['title','description','priority','start_date','end_date','is_completed'];
+
+    protected $casts = [
+        'updated_at' => 'datetime:Y-m-d',
+    ];
 }

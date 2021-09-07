@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header">Todo's List</div>
+          <div class="card-header">Compleetd Todo's</div>
           <div class="card-body">
             <table class="table table-bordered">
               <thead>
@@ -14,6 +14,7 @@
                   <th scope="col">Priority</th>
                   <th scope="col">Start Date</th>
                   <th scope="col">End Date</th>
+                  <th scope="col">Completed On</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
@@ -40,24 +41,15 @@
                   </td>
                   <td>{{ todo.start_date }}</td>
                   <td>{{ todo.end_date }}</td>
+                  <td>{{ todo.updated_at }}</td>
                   <td>
                     <div class="btn-group" role="group">
-                      <router-link
-                        :to="{ name: 'edit', params: { id: todo.id } }"
-                        class="btn btn-primary"
-                        >Edit
-                      </router-link>
-                      <button  v-if="todo.is_completed==0"
-                        class="btn btn-success"
-                        @click="completeTodo(todo.id)"
-                      >
-                        Complete
-                      </button>
                       <button
-                        class="btn btn-danger"
-                        @click="deleteTodo(todo.id)"
+                        v-if="todo.is_completed == 1"
+                        class="btn btn-success"
+                        @click="undocompleteTodo(todo.id)"
                       >
-                        Delete
+                        Restore
                       </button>
                     </div>
                   </td>
@@ -80,7 +72,7 @@ export default {
   },
   created() {
     this.axios
-      .get("api/todo")
+      .get("api/todos/completedIndex")
       .then((response) => {
         this.todos = response.data;
         console.log(response);
@@ -98,24 +90,24 @@ export default {
         });
       }
     },
-    completeTodo(id) {
-      let confirm_flag = confirm("Are You sure to complete this todo");
+    undocompleteTodo(id) {
+      let confirm_flag = confirm("Are You sure to restore this todo");
       if (confirm_flag) {
         this.axios
-          .get(`api/todos/completed/${id}`)
+          .get(`api/todos/undocompleted/${id}`)
           .then((response) => {
             console.log(response);
           })
           .catch((error) => console.log(error))
           .finally(() => {
-            this.axios
-              .get("api/todo")
-              .then((response) => {
-                this.todos = response.data;
-                console.log(response);
-              })
-              .catch((error) => console.log(error))
-              .finally(() => (this.loading = false));
+           this.axios
+      .get("api/todos/completedIndex")
+      .then((response) => {
+        this.todos = response.data;
+        console.log(response);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => (this.loading = false));
           });
       }
     },

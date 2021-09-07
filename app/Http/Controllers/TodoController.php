@@ -14,7 +14,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Todo::orderBy('id','DESC')->get();
+        $todos = Todo::orderBy('id', 'DESC')->get();
         return $todos;
     }
 
@@ -33,15 +33,14 @@ class TodoController extends Controller
             'end_date'=>'required'
         ]);
 
-       $todo =  Todo::create([
+        $todo =  Todo::create([
             'title' => $request->title,
             'description' => $request->description,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
         ]);
 
-        return response('The todo has created successfully',201);
-
+        return response('The todo has created successfully', 201);
     }
 
     /**
@@ -77,9 +76,28 @@ class TodoController extends Controller
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
         ]);
-        return response('The todo has been updated successfully',200);
+        return response('The todo has been updated successfully', 200);
     }
-
+    public function completed($id)
+    {
+        $todo = Todo::find($id);
+        $todo->update([
+           'is_completed'=>true
+        ]);
+        return response('The todo has been completed successfully', 200);
+    }
+    public function undocompleted($id)
+    {
+        $todo = Todo::find($id);
+        $todo->update([
+           'is_completed'=>false
+        ]);
+        return response('The todo has been completed successfully', 200);    }
+    public function completedIndex()
+    {
+        $todos = Todo::orderBy('id', 'DESC')->where('is_completed',true)->get();
+        return $todos;
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -89,6 +107,6 @@ class TodoController extends Controller
     public function destroy(Todo $todo)
     {
         $todo->delete();
-        return response('The Todo has been deleted successfully',200);
+        return response('The Todo has been deleted successfully', 200);
     }
 }
