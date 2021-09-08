@@ -2127,13 +2127,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
-    console.log("Component mounted.");
+    console.log("Add todo Component mounted.");
+  },
+  created: function created() {
+    console.log(this.router);
   },
   data: function data() {
     return {
-      todos: {}
+      todos: {
+        priority: 'high'
+      },
+      errors: []
     };
   },
   methods: {
@@ -2141,14 +2148,15 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.axios.post("api/todo", this.todos).then(function (response) {
-        if (response.status === 200) {
-          //reload todos
-          app.todos = response.data; // this.content = "";
+        console.log(response);
 
-          console.log(response);
+        if (response.status === 201) {
+          //   console.log(this.$router);
+          _this.$router.push('/');
         }
       })["catch"](function (error) {
-        return console.log(error);
+        _this.errors = error;
+        console.log(_this.errors);
       })["finally"](function () {
         return _this.loading = false;
       });
@@ -2242,7 +2250,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mounted: function mounted() {
+    console.log("Component mounted.");
+  },
   data: function data() {
     return {
       todos: []
@@ -2541,7 +2571,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.axios.get("api/todo/6", this.todos).then(function (response) {
+    this.axios.get("api/todo/".concat(this.$route.params.id), this.todos).then(function (response) {
       if (response.status === 200) {
         //reload todos
         _this.todos = response.data;
@@ -2560,7 +2590,7 @@ __webpack_require__.r(__webpack_exports__);
       this.axios.patch("api/todo/".concat(this.$route.params.id), this.todos).then(function (response) {
         if (response.status === 200) {
           //reload todos
-          app.todos = response.data;
+          _this2.$router.push('/');
         }
       })["catch"](function (error) {
         return console.log(error);
@@ -2672,7 +2702,8 @@ __webpack_require__.r(__webpack_exports__);
 var routes = [{
   name: 'home',
   path: '/',
-  component: _components_AllTasks_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  component: _components_AllTasks_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+  alias: "/home"
 }, {
   name: 'completed',
   path: '/completed',
@@ -38634,7 +38665,23 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("Todo's List")]),
+          _c(
+            "div",
+            { staticClass: "card-header" },
+            [
+              _c("p", { staticClass: "float-left" }, [_vm._v("Todo's List")]),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-primary float-right",
+                  attrs: { to: "/add" }
+                },
+                [_vm._v("Add Todo")]
+              )
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("table", { staticClass: "table table-bordered" }, [
@@ -38673,6 +38720,20 @@ var render = function() {
                     _c("td", [_vm._v(_vm._s(todo.start_date))]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(todo.end_date))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      todo.is_completed == 0
+                        ? _c("span", { staticClass: "badge badge-warning" }, [
+                            _vm._v("Not Completed")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      todo.is_completed == 1
+                        ? _c("span", { staticClass: "badge badge-success" }, [
+                            _vm._v("Completed")
+                          ])
+                        : _vm._e()
+                    ]),
                     _vm._v(" "),
                     _c("td", [
                       _c(
@@ -38758,6 +38819,8 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Start Date")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("End Date")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Actions")])
       ])

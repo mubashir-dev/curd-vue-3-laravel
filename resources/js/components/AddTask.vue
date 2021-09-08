@@ -1,3 +1,4 @@
+
 <template>
   <div class="container-fluid">
     <div class="row justify-content-center">
@@ -61,13 +62,20 @@ Add Todo
 </template>
 
 <script>
+
 export default {
   mounted() {
-    console.log("Component mounted.");
+    console.log("Add todo Component mounted.");
+  },
+  created() {
+          console.log(this.router);
   },
   data() {
     return {
-      todos: {},
+      todos: {
+          priority:'high'
+      },
+      errors:[]
     };
   },
   methods: {
@@ -75,14 +83,16 @@ export default {
       this.axios
         .post("api/todo", this.todos)
         .then((response) => {
-          if (response.status === 200) {
-            //reload todos
-            app.todos = response.data;
-            // this.content = "";
             console.log(response);
-          }
+          if (response.status === 201) {
+            //   console.log(this.$router);
+              this.$router.push('/');
+              }
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+            this.errors = error;
+            console.log(this.errors);
+        })
         .finally(() => (this.loading = false));
     },
   },

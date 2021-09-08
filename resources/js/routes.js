@@ -7,7 +7,8 @@ export const routes = [
     {
         name: 'home',
         path: '/',
-        component: AllTasks
+        component: AllTasks,
+        alias:"/home"
     },
     {
         name: 'completed',

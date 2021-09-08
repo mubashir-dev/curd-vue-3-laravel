@@ -3,7 +3,12 @@
     <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header">Todo's List</div>
+          <div class="card-header">
+            <p class="float-left">Todo's List</p>
+            <router-link to="/add" class="btn btn-primary float-right"
+              >Add Todo</router-link
+            >
+          </div>
           <div class="card-body">
             <table class="table table-bordered">
               <thead>
@@ -14,6 +19,7 @@
                   <th scope="col">Priority</th>
                   <th scope="col">Start Date</th>
                   <th scope="col">End Date</th>
+                  <th scope="col">Status</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
@@ -41,13 +47,26 @@
                   <td>{{ todo.start_date }}</td>
                   <td>{{ todo.end_date }}</td>
                   <td>
+                      <span
+                      v-if="todo.is_completed  == 0"
+                      class="badge badge-warning"
+                      >Not Completed</span
+                    >
+                    <span
+                      v-if="todo.is_completed  == 1"
+                      class="badge badge-success"
+                      >Completed</span
+                    >
+                     </td>
+                  <td>
                     <div class="btn-group" role="group">
                       <router-link
                         :to="{ name: 'edit', params: { id: todo.id } }"
                         class="btn btn-primary"
                         >Edit
                       </router-link>
-                      <button  v-if="todo.is_completed==0"
+                      <button
+                        v-if="todo.is_completed == 0"
                         class="btn btn-success"
                         @click="completeTodo(todo.id)"
                       >
@@ -73,6 +92,9 @@
 
 <script>
 export default {
+  mounted() {
+    console.log("Component mounted.");
+  },
   data() {
     return {
       todos: [],

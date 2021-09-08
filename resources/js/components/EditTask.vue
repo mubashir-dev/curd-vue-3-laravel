@@ -88,7 +88,7 @@ export default {
   },
   created() {
     this.axios
-      .get(`api/todo/6`, this.todos)
+      .get(`api/todo/${this.$route.params.id}`, this.todos)
       .then((response) => {
         if (response.status === 200) {
           //reload todos
@@ -106,7 +106,7 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             //reload todos
-            app.todos = response.data;
+              this.$router.push('/');
           }
         })
         .catch((error) => console.log(error))

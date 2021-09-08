@@ -17,7 +17,6 @@
                                 <div class="navbar-nav">
                                     <router-link to="/" class="nav-item nav-link">Home</router-link>
                                     <router-link to="/completed" class="nav-item nav-link">Completed Todo's</router-link>
-                                    <router-link to="/add" class="nav-item nav-link">Add Todo</router-link>
                                 </div>
                             </div>
                         </nav>
