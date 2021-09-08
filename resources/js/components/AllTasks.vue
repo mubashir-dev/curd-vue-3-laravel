@@ -4,13 +4,13 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <p class="float-left">Todo's List</p>
+            <h4 class="float-left font-weight-bold mt-2">Your Daily Todo's</h4>
             <router-link to="/add" class="btn btn-primary float-right"
               >Add Todo</router-link
             >
           </div>
           <div class="card-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-responsive">
               <thead>
                 <tr>
                   <th scope="col">#</th>
